@@ -1,27 +1,31 @@
-def create_list_from_list_diagonal(list):
-    i = 0
-    while i < len(list):
-        if (i + 1) != len(list):
-            if len(list[i]) == len(list[i + 1]):
-                i += 1
+import numpy as np
+
+from my_packages.my_functions.list_functions import selection_sort
+
+
+def create_list_from_list_diagonal(matrix):
+    idx = 0
+    while idx < len(matrix):
+        if (idx + 1) != len(matrix):
+            if len(matrix[idx]) == len(matrix[idx + 1]):
+                idx += 1
                 continue
             else:
                 print("The matrix isn't square!")
                 return
         else:
             break
-    i = 0
-    j = len(list[0]) - 1
+    idx = 0
+    j = len(matrix[0]) - 1
     new_list = []
-    while i < len(list):
-        new_list.append(list[i][j])
-        i += 1
+    while idx < len(matrix):
+        new_list.append(matrix[idx][j])
+        idx += 1
         j -= 1
-    print(new_list)
+    return new_list
 
 
-def move_elements(list, num_of_elms, mov_from, mov_to):
-
+def move_elements(list: list, num_of_elms, mov_from, mov_to):
     """
     :param mov_to:
     :param mov_from:
@@ -47,27 +51,35 @@ def move_elements(list, num_of_elms, mov_from, mov_to):
     return list
 
 
-def selection_sort(list):
-    for i in range(len(list)):
-        for j in range(i + 1, len(list)):
-            if list[j] < list[i]:
-                list[i], list[j] = list[j], list[i]
-    return list
-
-
-some_list = [[1, 3, 4, 7], [3, 6, 2, 3], [1, 0, 3, 4], [1, 2, 3, 4]]
-create_list_from_list_diagonal(some_list)
+matrix_4x4 = np.array([[1, 3, 4, 7],
+                       [3, 6, 2, 3],
+                       [1, 0, 3, 4],
+                       [1, 2, 3, 4]])
+print(matrix_4x4)
+create_list_from_list_diagonal(matrix_4x4)
 
 list1 = []
 print("List 1  = ", list1)
+
 list2 = [5, 4, 'string', list1]
 print("List 2  = ", list2)
+
 list2_copy = list2[:]
-print("list 2  = " + str(list2) + str(id(list2)))
-print("Copy list 2([:])  = " + str(list2_copy) + str(id(list2_copy)))
-list2_copy = list(list2)
-print("Copy list 2(list)  = " + str(list2_copy) + str(id(list2_copy)))
+list_2_list_copy = list(list2)
+pre_list_output_formatter = "%-20s"
+list_output_formatter = "%-{}s".format(len(str(list2)) + 3)
+id_output_formatter = "%-20s"
+
+output_lists = [
+    [f"list 2 = ", list2, "id = {}".format(id(list2))],
+    [f"Copy list 2([:]) = ", list2_copy, "id = {}".format(id(list2_copy))],
+    [f"Copy list 2([:]) = ", list_2_list_copy, "id = {}".format(id(list_2_list_copy))],
+]
+for row in output_lists:
+    print(pre_list_output_formatter % row[0] + list_output_formatter % row[1] + id_output_formatter % row[2])
+
 list2 += list2_copy
+
 print("List 2 + list 2 copy  = ", list2)
 print("Zero element of list 2  =", list2[0])
 list1 += 3, 5, 6
